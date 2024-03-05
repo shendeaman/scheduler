@@ -1,0 +1,77 @@
+Refer: https://www.datasciencelearner.com/python/how-to-implement-scheduler-in-python/
+
+Top online courses in Development
+Let’s understand How to implement a Scheduler in Python. Let’s start with the use case example – You must have seen so many databases which are updated everyday basis like stock, weather etc. Imagine how tedious the task is to call the same script every day manually. The good news is we can implement a scheduler service in a few lines of code in python and we can save tons of time. The beauty of the scheduler service in python is that you may call it from any OS. Actually, it may be implemented as a python script so you have numerous ways to deploy.
+
+Implement Scheduler in Python: Step by step –
+1. Install  schedule package
+pip install schedule
+implement Scheduler in Python
+implement Scheduler in Python
+2. Create a job –
+A job is nothing but the task you want to do through a scheduler on a certain frequency. For this article, we will create a function that will print something for us.
+
+def call_me():
+print("I am invoked")
+3. Schedule the job-
+schedule.every(30).seconds.do(call_me)
+this will call the job at the frequency of 30 seconds. There are so many variations for frequency let’s see one by one –
+
+scheduling the job at some minutes interval –
+
+schedule.every(10).minutes.do(call_me)
+For scheduling every hour –
+
+schedule.every().hour.do(call_me)
+In case on a certain day at a certain time-
+
+schedule.every().tuesday.at("18:00").do(call_me)
+4. Run the scheduler –
+while True: 
+  schedule.run_pending()
+Complete code –
+import schedule 
+def call_me(): 
+  print("I am invoked")
+schedule.every(1).seconds.do(call_me)
+while True: 
+  schedule.run_pending()
+Output –
+As you see the implementation is done in a way that it will call the call_me() function every second. This call_me function will print I am invoked every time . We are getting the same output –
+
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+I am invoked
+There are several options and parameters which can make scheduler implementation more flexible. Please refer the Scheduler official documentation . Here you will the complete details for each function in the schedule package.
+
+Use scheduler as a decorator –
+As a developer when you have to run multiple jobs in schedule. You may define a decorator function that you may apply on any job at any time. This will save a lot of time and code redundancy. Let’s understand how –
+
+Create a decorator function for scheduler –
+def scheduler(fun):
+    def inner():
+        schedule.every(7).seconds.do(fun)
+        print("scheduled now")
+        return
+    return inner
+Here fun is the function/job which is scheduled every 7 seconds. A few more things here the function schedule will be attached with the function fun as a decorator symbol @. For example-
+
+@schedule
+def fun():
+ print("I am a job")
+ return
+Please keep in mind that the function name is scheduled. This is not a python strict keyword. You may define your own keyword.
+
+Alternative for Schedule package –
+Obviously writing your own code is an alternative for libraries. But there is no use of duplicate code still we do it when we have license issue. If someone is charging for code or its commercial use. Anyways there are a few more options for the scheduler in python. For example – Advanced Python Scheduler .
+
+You may check it out as well.
+
+Data Science Learner Team
